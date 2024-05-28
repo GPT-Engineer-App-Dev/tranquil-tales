@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Box, Container, Flex, Heading, Text, VStack, HStack, Link, Divider, Stack, Input, Textarea, Button } from "@chakra-ui/react";
-import { FaTwitter, FaFacebook, FaInstagram } from "react-icons/fa";
+import { Box, Container, Flex, Heading, Text, VStack, HStack, Link, Divider, Stack, Input, Textarea, Button, useColorMode, IconButton } from "@chakra-ui/react";
+import { FaTwitter, FaFacebook, FaInstagram, FaSun, FaMoon } from "react-icons/fa";
 
 const Index = () => {
   const [posts, setPosts] = useState([
@@ -10,6 +10,7 @@ const Index = () => {
   ]);
 
   const [newPost, setNewPost] = useState({ title: "", date: "", content: "" });
+  const { colorMode, toggleColorMode } = useColorMode();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -25,12 +26,19 @@ const Index = () => {
   return (
     <Container maxW="container.xl" p={4}>
       {/* Navigation Bar */}
-      <Flex as="nav" justify="space-between" align="center" mb={8} p={4} bg="gray.100" borderRadius="md">
+      <Flex as="nav" justify="space-between" align="center" mb={8} p={4} bg={colorMode === "light" ? "gray.100" : "gray.700"} borderRadius="md">
         <Heading as="h1" size="lg">My Blog</Heading>
         <HStack spacing={4}>
           <Link href="#">Home</Link>
           <Link href="#">About</Link>
           <Link href="#">Contact</Link>
+          <IconButton
+            icon={colorMode === "light" ? <FaMoon /> : <FaSun />}
+            isRound
+            size="md"
+            alignSelf="flex-end"
+            onClick={toggleColorMode}
+          />
         </HStack>
       </Flex>
 
@@ -50,7 +58,7 @@ const Index = () => {
         </Box>
 
         {/* Sidebar */}
-        <Box flex="1" p={4} bg="gray.50" borderRadius="md">
+        <Box flex="1" p={4} bg={colorMode === "light" ? "gray.50" : "gray.600"} borderRadius="md">
           <Heading as="h3" size="md" mb={4}>Recent Posts</Heading>
           <VStack spacing={4} align="start">
             {posts.slice(0, 3).map((post, index) => (
@@ -68,7 +76,7 @@ const Index = () => {
       </Flex>
 
       {/* New Post Form */}
-      <Box mt={8} p={4} bg="gray.100" borderRadius="md">
+      <Box mt={8} p={4} bg={colorMode === "light" ? "gray.100" : "gray.700"} borderRadius="md">
         <Heading as="h3" size="md" mb={4}>Add New Post</Heading>
         <form onSubmit={handleSubmit}>
           <VStack spacing={4} align="start">
@@ -99,7 +107,7 @@ const Index = () => {
       </Box>
 
       {/* Footer */}
-      <Box as="footer" mt={8} p={4} bg="gray.100" borderRadius="md">
+      <Box as="footer" mt={8} p={4} bg={colorMode === "light" ? "gray.100" : "gray.700"} borderRadius="md">
         <Flex justify="center" mb={4}>
           <HStack spacing={4}>
             <Link href="#"><FaTwitter /></Link>
